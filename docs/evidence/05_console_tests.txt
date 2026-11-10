@@ -1,0 +1,9 @@
+$ python3 tests/test_console.py build/vending_app data
+[PASS] full menu selection cancel creation and polymorphism
+[PASS] bad text overflow trailing junk and out-of-range menu recover
+[PASS] EOF at menu and inside prompts terminates normally
+[PASS] invalid product leaves inventory intact
+[PASS] administration is blocked during selection
+5/5 console scenarios passed
+
+Exit code: 0

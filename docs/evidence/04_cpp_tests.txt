@@ -1,0 +1,22 @@
+$ ./build/vending_tests
+[PASS] money rejects negative values
+[PASS] money arithmetic comparison and formatting
+[PASS] money overflow cannot change operands
+[PASS] money subtraction cannot become negative
+[PASS] product validates identity name and price
+[PASS] slot enforces initial quantity and capacity
+[PASS] refill failures preserve stock including huge values
+[PASS] taking final item never makes stock negative
+[PASS] inventory duplicate does not overwrite original
+[PASS] new machine is idle without selection
+[PASS] selection before starting is rejected
+[PASS] valid path selects without decrementing stock
+[PASS] missing and empty slots keep selecting state
+[PASS] cancel works in selecting and paying and is idempotent
+[PASS] paying cannot switch product or restart selection
+[PASS] adding slots requires idle and valid data
+[PASS] same event reaches four derived state implementations
+[PASS] dispensing shell rejects unsafe commands through base
+18/18 tests passed
+
+Exit code: 0

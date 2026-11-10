@@ -1,0 +1,9 @@
+/build*/
+/out/
+/.vs/
+*.exe
+*.o
+*.obj
+*.pdb
+__pycache__/
+*.bundle

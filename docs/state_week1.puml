@@ -1,0 +1,21 @@
+@startuml
+title Trang thai da cai dat — moc tuan 1
+[*] --> Idle
+Idle --> Selecting : StartSelection
+Selecting --> Selecting : ChooseSlot invalid or out of stock
+Selecting --> Paying : ChooseSlot valid
+Selecting --> Idle : Cancel
+Paying --> Idle : Cancel
+Paying --> Paying : StartSelection or ChooseSlot rejected
+Idle --> Idle : ChooseSlot or Cancel rejected
+state Dispensing
+note right of Dispensing
+  Class exists in polymorphic container.
+  Describe works; selection/cancel rejected.
+  No transition from purchase flow in week 1.
+end note
+note bottom of Paying
+  No money accepted; no stock decremented.
+  Describe has no side effects in all states.
+end note
+@enduml

@@ -1,0 +1,100 @@
+@startuml
+title May ban hang tu dong — UML moc tuan 1
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+hide empty members
+
+class Money {
+  - dong_ : int64_t
+  + Money(dong : int64_t)
+  + dong() : int64_t
+  + operator+(other : Money) : Money
+  + operator-(other : Money) : Money
+  + operator==(other : Money) : bool
+  + operator<(other : Money) : bool
+}
+class Product {
+  - id_ : string
+  - name_ : string
+  - price_ : Money
+  + Product(id, name, price)
+  + id() : const string&
+  + name() : const string&
+  + price() : Money
+}
+class Slot {
+  - code_ : string
+  - product_ : Product
+  - quantity_ : int
+  - capacity_ : int
+  + Slot(code, product, quantity, capacity)
+  + product() : const Product&
+  + inStock() : bool
+  + refill(amount : int) : void
+  + takeOne() : void
+}
+class Inventory {
+  - slots_ : map<string, Slot>
+  + addSlot(slot : Slot) : void
+  + find(code : const string&) : const Slot*
+  + slots() : const map<string, Slot>&
+  + size() : size_t
+}
+abstract class MachineState {
+  + {abstract} id() : StateId
+  + {abstract} name() : string_view
+  + {abstract} handle(context, event) : StateDecision
+  + ~MachineState() virtual
+}
+class IdleState {
+  + id() : StateId
+  + name() : string_view
+  + handle(context, event) : StateDecision
+}
+class SelectingState {
+  + id() : StateId
+  + name() : string_view
+  + handle(context, event) : StateDecision
+}
+class PayingState {
+  + id() : StateId
+  + name() : string_view
+  + handle(context, event) : StateDecision
+}
+class DispensingState {
+  + id() : StateId
+  + name() : string_view
+  + handle(context, event) : StateDecision
+}
+class VendingMachine {
+  - inventory_ : Inventory
+  - states_ : vector<unique_ptr<MachineState>>
+  - state_ : StateId
+  - selectedSlot_ : optional<string>
+  + dispatch(event) : DispatchResult
+  + describeStates() : vector<StateInfo>
+  + addSlot(slot : Slot) : void
+  + inventory() : const Inventory&
+}
+class ConsoleUI {
+  - machine_ : VendingMachine&
+  - input_ : istream&
+  - output_ : ostream&
+  + run() : int
+}
+
+MachineState <|-- IdleState
+MachineState <|-- SelectingState
+MachineState <|-- PayingState
+MachineState <|-- DispensingState
+VendingMachine "1" *-- "4" MachineState : owns
+VendingMachine "1" *-- "1" Inventory
+Inventory "1" *-- "0..*" Slot
+Slot "1" *-- "1" Product
+Product "1" *-- "1" Money
+ConsoleUI --> VendingMachine : non-owning reference
+note bottom of DispensingState
+  Week 1: describe/reject only.
+  No purchase transition enters this state yet.
+end note
+@enduml

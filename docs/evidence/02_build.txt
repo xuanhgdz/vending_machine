@@ -1,0 +1,19 @@
+$ cmake --build build --parallel 2
+[ 15%] Building CXX object CMakeFiles/vending_core.dir/src/Product.cpp.o
+[ 15%] Building CXX object CMakeFiles/vending_core.dir/src/Money.cpp.o
+[ 23%] Building CXX object CMakeFiles/vending_core.dir/src/Slot.cpp.o
+[ 30%] Building CXX object CMakeFiles/vending_core.dir/src/Inventory.cpp.o
+[ 38%] Building CXX object CMakeFiles/vending_core.dir/src/MachineState.cpp.o
+[ 46%] Building CXX object CMakeFiles/vending_core.dir/src/VendingMachine.cpp.o
+[ 53%] Building CXX object CMakeFiles/vending_core.dir/src/DemoData.cpp.o
+[ 61%] Linking CXX static library libvending_core.a
+[ 61%] Built target vending_core
+[ 69%] Building CXX object CMakeFiles/vending_app.dir/src/main.cpp.o
+[ 76%] Building CXX object CMakeFiles/vending_tests.dir/tests/test_main.cpp.o
+[ 84%] Building CXX object CMakeFiles/vending_app.dir/src/ConsoleUI.cpp.o
+[ 92%] Linking CXX executable vending_tests
+[ 92%] Built target vending_tests
+[100%] Linking CXX executable vending_app
+[100%] Built target vending_app
+
+Exit code: 0

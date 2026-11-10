@@ -1,0 +1,48 @@
+$ ./build/vending_app_direct (select A1, cancel, exit)
+MAY BAN HANG TU DONG - MOC 1
+Ban nay cho phep tao va chon hang; chua nhan tien hoac xuat hang.
+
+Trang thai: Idle
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: [OK] Da bat dau chon hang.
+Idle -> Selecting
+
+Trang thai: Selecting
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: Nhap ma khe: [OK] Da chon Nuoc suoi. Thanh toan chua mo trong phien ban nay.
+Selecting -> Paying
+
+Trang thai: Paying | Khe da chon: A1
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: [OK] Da huy lua chon; ton kho khong thay doi.
+Paying -> Idle
+
+Trang thai: Idle
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: Tam biet. Du lieu them trong phien nay chua duoc luu tep.
+
+Exit code: 0

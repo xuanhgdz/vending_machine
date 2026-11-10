@@ -1,0 +1,140 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1660" height="1330" viewBox="0 0 1660 1330">
+<title>UML các lớp chính của Máy bán hàng tự động tuần 1</title>
+<desc>VendingMachine sở hữu Inventory và bốn MachineState qua unique_ptr. IdleState, SelectingState, PayingState và DispensingState kế thừa MachineState. Inventory chứa Slot, Slot chứa Product và Product chứa Money. ConsoleUI mượn tham chiếu tới máy.</desc>
+<defs>
+ <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M1,1 L10,6 L1,11" fill="none" stroke="#26364A" stroke-width="1.4"/></marker>
+ <marker id="inherit" markerWidth="15" markerHeight="15" refX="13" refY="7.5" orient="auto"><path d="M1,1 L13,7.5 L1,14 Z" fill="white" stroke="#26364A" stroke-width="1.2"/></marker>
+ <marker id="diamond" markerWidth="16" markerHeight="12" refX="1" refY="6" orient="auto"><path d="M1,6 L7,1 L13,6 L7,11 Z" fill="#26364A"/></marker>
+</defs>
+<rect width="1660" height="1330" fill="white"/>
+<g font-family="DejaVu Sans, sans-serif" fill="#172635">
+<text x="50" y="47" font-size="27" font-weight="bold">Máy bán hàng tự động — Sơ đồ lớp tuần 1</text>
+<text x="50" y="76" font-size="16">Các lớp chính khớp mã C++20 • Dữ liệu đóng gói • State và container đa hình</text>
+
+<path d="M400,230 H500" stroke="#26364A" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+<text x="409" y="215" font-size="13">mượn &amp;</text>
+<path d="M1160,220 H1240" stroke="#26364A" stroke-width="2" fill="none" marker-start="url(#diamond)"/>
+<text x="1184" y="201" font-size="15">1</text>
+<path d="M1425,336 V445" stroke="#26364A" stroke-width="2" fill="none" marker-start="url(#diamond)"/>
+<text x="1440" y="416" font-size="15">0..*</text>
+<path d="M1425,702 V760" stroke="#26364A" stroke-width="2" fill="none" marker-start="url(#diamond)"/>
+<text x="1440" y="734" font-size="15">1</text>
+<path d="M1425,972 V1035" stroke="#26364A" stroke-width="2" fill="none" marker-start="url(#diamond)"/>
+<text x="1440" y="1018" font-size="15">1</text>
+<path d="M690,357 V510" stroke="#26364A" stroke-width="2" fill="none" marker-start="url(#diamond)"/>
+<text x="710" y="451" font-size="16">4 state được sở hữu</text>
+<path d="M175,900 V820 H1030 V900" stroke="#26364A" stroke-width="2" fill="none"/>
+<path d="M460,900 V820" stroke="#26364A" stroke-width="2" fill="none"/>
+<path d="M745,900 V820" stroke="#26364A" stroke-width="2" fill="none"/>
+<path d="M690,820 V682" stroke="#26364A" stroke-width="2" fill="none" marker-end="url(#inherit)"/>
+<text x="711" y="789" font-size="16">IS-A</text>
+<rect x="50" y="140" width="350" height="166" fill="white" stroke="#26364A" stroke-width="1.6"/>
+<rect x="51" y="141" width="348" height="43" fill="#EAF0F7"/>
+<text x="65" y="169" font-size="21" font-weight="bold">ConsoleUI</text>
+<path d="M50,184 H400" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="63" y="207" font-size="15">- machine_: VendingMachine&amp;</text>
+<text x="63" y="229" font-size="15">- input_: istream&amp;</text>
+<text x="63" y="251" font-size="15">- output_: ostream&amp;</text>
+<path d="M50,264 H400" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="63" y="289" font-size="14">+ run(): int</text>
+<rect x="500" y="100" width="660" height="257" fill="white" stroke="#26364A" stroke-width="1.6"/>
+<rect x="501" y="101" width="658" height="43" fill="#EAF0F7"/>
+<text x="515" y="129" font-size="21" font-weight="bold">VendingMachine</text>
+<path d="M500,144 H1160" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="513" y="167" font-size="15">- inventory_: Inventory</text>
+<text x="513" y="189" font-size="15">- states_: vector&lt;unique_ptr&lt;MachineState&gt;&gt;</text>
+<text x="513" y="211" font-size="15">- state_: StateId</text>
+<text x="513" y="233" font-size="15">- selectedSlot_: optional&lt;string&gt;</text>
+<path d="M500,246 H1160" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="513" y="271" font-size="14">+ dispatch(event): DispatchResult</text>
+<text x="513" y="294" font-size="14">+ describeStates(): vector&lt;StateInfo&gt;</text>
+<text x="513" y="317" font-size="14">+ addSlot(slot): void</text>
+<text x="513" y="340" font-size="14">+ inventory(): const Inventory&amp;</text>
+<rect x="1240" y="145" width="370" height="191" fill="white" stroke="#26364A" stroke-width="1.6"/>
+<rect x="1241" y="146" width="368" height="43" fill="#EAF0F7"/>
+<text x="1255" y="174" font-size="21" font-weight="bold">Inventory</text>
+<path d="M1240,189 H1610" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="1253" y="212" font-size="15">- slots_: map&lt;string, Slot&gt;</text>
+<path d="M1240,225 H1610" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="1253" y="250" font-size="14">+ addSlot(slot): void</text>
+<text x="1253" y="273" font-size="14">+ find(code): const Slot*</text>
+<text x="1253" y="296" font-size="14">+ slots(): const map&lt;string, Slot&gt;&amp;</text>
+<text x="1253" y="319" font-size="14">+ size(): size_t</text>
+<rect x="1240" y="445" width="370" height="257" fill="white" stroke="#26364A" stroke-width="1.6"/>
+<rect x="1241" y="446" width="368" height="43" fill="#EAF0F7"/>
+<text x="1255" y="474" font-size="21" font-weight="bold">Slot</text>
+<path d="M1240,489 H1610" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="1253" y="512" font-size="15">- code_: string</text>
+<text x="1253" y="534" font-size="15">- product_: Product</text>
+<text x="1253" y="556" font-size="15">- quantity_: int</text>
+<text x="1253" y="578" font-size="15">- capacity_: int</text>
+<path d="M1240,591 H1610" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="1253" y="616" font-size="14">+ inStock(): bool</text>
+<text x="1253" y="639" font-size="14">+ product(): const Product&amp;</text>
+<text x="1253" y="662" font-size="14">+ refill(amount): void</text>
+<text x="1253" y="685" font-size="14">+ takeOne(): void</text>
+<rect x="1240" y="760" width="370" height="212" fill="white" stroke="#26364A" stroke-width="1.6"/>
+<rect x="1241" y="761" width="368" height="43" fill="#EAF0F7"/>
+<text x="1255" y="789" font-size="21" font-weight="bold">Product</text>
+<path d="M1240,804 H1610" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="1253" y="827" font-size="15">- id_: string</text>
+<text x="1253" y="849" font-size="15">- name_: string</text>
+<text x="1253" y="871" font-size="15">- price_: Money</text>
+<path d="M1240,884 H1610" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="1253" y="909" font-size="14">+ id(): const string&amp;</text>
+<text x="1253" y="932" font-size="14">+ name(): const string&amp;</text>
+<text x="1253" y="955" font-size="14">+ price(): Money</text>
+<rect x="1240" y="1035" width="370" height="191" fill="white" stroke="#26364A" stroke-width="1.6"/>
+<rect x="1241" y="1036" width="368" height="43" fill="#EAF0F7"/>
+<text x="1255" y="1064" font-size="21" font-weight="bold">Money</text>
+<path d="M1240,1079 H1610" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="1253" y="1102" font-size="15">- dong_: int64_t</text>
+<path d="M1240,1115 H1610" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="1253" y="1140" font-size="14">+ dong(): int64_t</text>
+<text x="1253" y="1163" font-size="14">+ operator+ / operator-</text>
+<text x="1253" y="1186" font-size="14">+ operator== / operator&lt;</text>
+<text x="1253" y="1209" font-size="14">+ operator&lt;&lt; (friend)</text>
+<rect x="420" y="510" width="540" height="172" fill="white" stroke="#26364A" stroke-width="1.6"/>
+<rect x="421" y="511" width="538" height="60" fill="#EAF0F7"/>
+<text x="435" y="531" font-size="14">«abstract»</text>
+<text x="435" y="556" font-size="22" font-weight="bold">MachineState</text>
+<path d="M420,571 H960" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="433" y="596" font-size="14">+ virtual ~MachineState() = default</text>
+<text x="433" y="619" font-size="14">+ id(): StateId = 0</text>
+<text x="433" y="642" font-size="14">+ name(): string_view = 0</text>
+<text x="433" y="665" font-size="14">+ handle(context, event): StateDecision = 0</text>
+<rect x="45" y="900" width="260" height="132" fill="white" stroke="#26364A" stroke-width="1.6"/>
+<rect x="46" y="901" width="258" height="43" fill="#EAF0F7"/>
+<text x="60" y="929" font-size="21" font-weight="bold">IdleState</text>
+<path d="M45,944 H305" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="58" y="969" font-size="14">+ id() override</text>
+<text x="58" y="992" font-size="14">+ name() override</text>
+<text x="58" y="1015" font-size="14">+ handle(...) override</text>
+<rect x="330" y="900" width="260" height="132" fill="white" stroke="#26364A" stroke-width="1.6"/>
+<rect x="331" y="901" width="258" height="43" fill="#EAF0F7"/>
+<text x="345" y="929" font-size="21" font-weight="bold">SelectingState</text>
+<path d="M330,944 H590" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="343" y="969" font-size="14">+ id() override</text>
+<text x="343" y="992" font-size="14">+ name() override</text>
+<text x="343" y="1015" font-size="14">+ handle(...) override</text>
+<rect x="615" y="900" width="260" height="132" fill="white" stroke="#26364A" stroke-width="1.6"/>
+<rect x="616" y="901" width="258" height="43" fill="#EAF0F7"/>
+<text x="630" y="929" font-size="21" font-weight="bold">PayingState</text>
+<path d="M615,944 H875" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="628" y="969" font-size="14">+ id() override</text>
+<text x="628" y="992" font-size="14">+ name() override</text>
+<text x="628" y="1015" font-size="14">+ handle(...) override</text>
+<rect x="900" y="900" width="260" height="132" fill="white" stroke="#26364A" stroke-width="1.6"/>
+<rect x="901" y="901" width="258" height="43" fill="#EAF0F7"/>
+<text x="915" y="929" font-size="21" font-weight="bold">DispensingState</text>
+<path d="M900,944 H1160" stroke="#26364A" stroke-width="2" fill="none"/>
+<text x="913" y="969" font-size="14">+ id() override</text>
+<text x="913" y="992" font-size="14">+ name() override</text>
+<text x="913" y="1015" font-size="14">+ handle(...) override</text>
+<text x="50" y="1120" font-size="19" font-weight="bold">Quan hệ sở hữu</text>
+<text x="50" y="1150" font-size="16">Hình thoi đen: composition. Tam giác rỗng: kế thừa. Mũi tên: tham chiếu không sở hữu.</text>
+<text x="50" y="1180" font-size="16">Mỗi Slot chứa 1 Product; mỗi Product chứa 1 Money theo giá trị.</text>
+<text x="50" y="1218" font-size="19" font-weight="bold">Phạm vi mốc đầu</text>
+<text x="50" y="1248" font-size="16">DispensingState mới có khung handle. Luồng mua chưa chuyển vào Dispensing và chưa nhận tiền.</text>
+<text x="50" y="1278" font-size="16">DTO sự kiện/quyết định và hợp đồng tham chiếu: xem MachineTypes.hpp và docs/02_design.md.</text>
+</g></svg>

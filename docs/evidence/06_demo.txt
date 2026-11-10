@@ -1,0 +1,163 @@
+$ ./build/vending_app < data/demo_week1.txt
+MAY BAN HANG TU DONG - MOC 1
+Ban nay cho phep tao va chon hang; chua nhan tien hoac xuat hang.
+
+Trang thai: Idle
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: 
+Khe       San pham                             Gia (VND)       Ton    Suc chua
+A1        Nuoc suoi                                10000         2          10
+A2        Nuoc ngot                                15000         0          10
+B1        Sua hop                                  20000         5           8
+
+Trang thai: Idle
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: 
+Cung su kien Describe duoc gui qua MachineState cho 4 lop con:
+- Idle: Cho bat dau mua; cho phep them khe hang.
+- Selecting: Nhan ma khe; chi chap nhan hang con ton kho.
+- Paying: Da chon hang; hien co the huy. Nhan tien se duoc bo sung sau.
+- Dispensing: Khung trang thai xuat hang; chua duoc kich hoat o moc 1.
+Xem thong tin khong lam doi trang thai hay ton kho.
+
+Trang thai: Idle
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: Nhap ma khe: [TU CHOI] Hay bat dau chon hang truoc.
+Idle -> Idle
+
+Trang thai: Idle
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: [OK] Da bat dau chon hang.
+Idle -> Selecting
+
+Trang thai: Selecting
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: Nhap ma khe: [TU CHOI] Khe A2 da het hang.
+Selecting -> Selecting
+
+Trang thai: Selecting
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: Nhap ma khe: [TU CHOI] Khong tim thay khe: UNKNOWN
+Selecting -> Selecting
+
+Trang thai: Selecting
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: Nhap ma khe: [OK] Da chon Nuoc suoi. Thanh toan chua mo trong phien ban nay.
+Selecting -> Paying
+
+Trang thai: Paying | Khe da chon: A1
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: 
+Cung su kien Describe duoc gui qua MachineState cho 4 lop con:
+- Idle: Cho bat dau mua; cho phep them khe hang.
+- Selecting: Nhan ma khe; chi chap nhan hang con ton kho.
+- Paying: Da chon hang; hien co the huy. Nhan tien se duoc bo sung sau.
+- Dispensing: Khung trang thai xuat hang; chua duoc kich hoat o moc 1.
+Xem thong tin khong lam doi trang thai hay ton kho.
+
+Trang thai: Paying | Khe da chon: A1
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: [TU CHOI] Hay huy lua chon hien tai truoc khi chon hang khac.
+Paying -> Paying
+
+Trang thai: Paying | Khe da chon: A1
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: [OK] Da huy lua chon; ton kho khong thay doi.
+Paying -> Idle
+
+Trang thai: Idle
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: Ma khe: Ma san pham: Ten san pham: Gia (boi so 1000 VND): So luong ban dau: Suc chua: [OK] Da them khe hang.
+
+Trang thai: Idle
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: 
+Khe       San pham                             Gia (VND)       Ton    Suc chua
+A1        Nuoc suoi                                10000         2          10
+A2        Nuoc ngot                                15000         0          10
+B1        Sua hop                                  20000         5           8
+C1        Banh quy                                 15000         4          10
+
+Trang thai: Idle
+1. Xem danh sach hang
+2. Bat dau chon hang
+3. Chon ma khe hang
+4. Huy lua chon
+5. Them khe hang (Idle)
+6. Xem cac trang thai va da hinh
+0. Thoat
+Lua chon: Tam biet. Du lieu them trong phien nay chua duoc luu tep.
+
+Exit code: 0
