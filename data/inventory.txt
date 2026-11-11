@@ -1,0 +1,8 @@
+# Du lieu ton kho khoi tao cho May Ban Hang Tu Dong
+# Dinh dang: TYPE|SLOT_CODE|NAME|PRICE_VND|EXTRA_PARAM|QUANTITY
+# Voi DRINK: EXTRA_PARAM = 1 (Uop lanh) hoac 0 (Binh thuong)
+# Voi SNACK: EXTRA_PARAM = Khoi luong tinh bang gram (g)
+DRINK|A1|Coca Cola|10000|1|3
+DRINK|A2|Tra Xanh 0 Do|12000|1|2
+SNACK|B1|Snack Khoai Tay Lay's|15000|52|2
+SNACK|B2|Banh Oreo Socola|8000|40|0

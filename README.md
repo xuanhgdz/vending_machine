@@ -1,105 +1,60 @@
-# Máy bán hàng tự động — Mốc tuần 1
+# Đồ án Lập trình hướng đối tượng (C++) - Chủ đề 26: Máy bán hàng tự động
 
-Dự án C++20 cho chủ đề 26 môn OOP. Bản này hoàn thành phần kỹ thuật tuần 1: lớp dữ liệu có ràng buộc, cây kế thừa 5 lớp, container đa hình, menu console, UML v1 và build bằng CMake.
+## 1. Thông tin nhóm và dự án
+* **Tên dự án:** Chủ đề 26 - Máy bán hàng tự động (Vending Machine Simulation)
+* **Danh sách thành viên (Nhóm 3 sinh viên):**
+  1. **(Họ tên SV 1) - (MSSV):** Phụ trách lớp `Money`, cây kế thừa `Product` (`DrinkProduct`, `SnackProduct`), `ProductFactory` và lớp `Slot` (Quản lý bộ nhớ RAII với `std::unique_ptr`, nạp chồng toán tử).
+  2. **(Họ tên SV 2) - (MSSV):** Phụ trách thiết kế và cài đặt **State Pattern** (`MachineState` -> `IdleState`, `SelectingState`, `PayingState`, `DispensingState`) và điều phối trạng thái trong `VendingMachine`.
+  3. **(Họ tên SV 3) - (MSSV):** Phụ trách **Strategy Pattern** (`IPaymentStrategy` -> `CashPayment`, `QRPayment`), xử lý ngoại lệ (`OutOfStockException`, `InsufficientPaymentException`, `InvalidSlotException`), đọc/ghi File I/O và kịch bản kiểm thử `main.cpp`.
 
-**Chạy được:** xem hàng, thêm khe hàng, bắt đầu chọn, chọn một khe còn hàng, hủy lựa chọn và xem cách cùng một sự kiện được xử lý bởi bốn lớp trạng thái. Chọn hàng chưa trừ tồn kho. Phiên bản này chưa nhận tiền, trả tiền, xuất hàng hoặc lưu tệp nghiệp vụ.
+## 2. Cấu trúc thư mục
+Dự án tuân thủ cấu trúc chuẩn của học phần:
+* `include/`: Chứa các file header (`.h`): `Money.h`, `Product.h`, `Slot.h`, `PaymentStrategy.h`, `MachineState.h`, `VendingMachine.h`, `Exceptions.h`.
+* `src/`: Chứa file định nghĩa thực thi (`.cpp`): `VendingMachine.cpp`.
+* `data/`: Chứa dữ liệu tồn kho mẫu `inventory.txt` và nhật ký giao dịch `transactions.log`.
+* `tests/`: Chứa bộ kiểm thử tự động `test_scenarios.cpp`.
+* `docs/`: Chứa Cẩm nang bảo vệ đồ án, sơ đồ lớp UML và câu hỏi vấn đáp (`CAM_NANG_BAO_VE.md`).
+* `CMakeLists.txt`: File cấu hình biên dịch tự động bằng CMake.
+* `main.cpp`: Điểm bắt đầu chương trình giao diện Console và Auto-Demo.
 
-## Bắt đầu nhanh
+## 3. Hướng dẫn biên dịch và chạy (Build & Run)
 
-Cần trình biên dịch hỗ trợ C++20 và CMake từ 3.16. Python 3 là tùy chọn để chạy thêm các kịch bản console; kiểm thử C++ vẫn chạy khi không có Python. Không cần thư viện C++ bên ngoài.
-
-Linux hoặc macOS với trình biên dịch phù hợp:
-
+### Cách 1: Sử dụng CMake (Khuyên dùng theo chuẩn đồ án)
 ```bash
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-cmake --build build --parallel 2
-ctest --test-dir build --output-on-failure
-./build/vending_app
+mkdir build
+cd build
+cmake ..
+cmake --build .
 ```
+* **Chạy chương trình chính:**
+  * Trên Linux/macOS: `./app`
+  * Trên Windows: `.\app.exe`
+* **Chạy bộ kiểm thử tự động (Unit Tests):**
+  * Trên Linux/macOS: `./run_tests`
+  * Trên Windows: `.\run_tests.exe`
 
-Windows với Visual Studio và bộ công cụ C++ đã cài, chạy trong Developer PowerShell:
-
-```powershell
-cmake -S . -B build
-cmake --build build --config Debug
-ctest --test-dir build -C Debug --output-on-failure
-.\build\Debug\vending_app.exe
-```
-
-Nếu dùng MinGW với generator đơn cấu hình, file chạy thường ở `build/vending_app.exe`. Phần xác minh đi kèm được thực hiện trên Linux/GCC; hướng dẫn Windows chưa được chạy trực tiếp trong môi trường đó.
-
-Có thể build ứng dụng trực tiếp bằng GCC mà không cần CMake:
-
+### Cách 2: Biên dịch trực tiếp bằng g++ (Nhanh gọn khi không cài CMake)
 ```bash
-g++ -std=c++20 -Wall -Wextra -Wpedantic -Iinclude src/*.cpp -o vending_app
-./vending_app
+# Biên dịch và chạy chương trình chính
+g++ -std=c++20 -Iinclude main.cpp src/VendingMachine.cpp -o app
+./app
+
+# Biên dịch và chạy bộ kiểm thử tự động
+g++ -std=c++20 -Iinclude tests/test_scenarios.cpp src/VendingMachine.cpp -o run_tests
+./run_tests
 ```
 
-## Thử ngay
+## 4. Kịch bản Demo cốt lõi (8 - 12 phút khi bảo vệ)
+Khi chạy `./app`, bạn có thể bấm **Phím 7** để chạy tự động toàn bộ các kịch bản cốt lõi hoặc thao tác từng bước từ Phím 1 -> 6:
+1. **Khởi tạo & File I/O (`std::ifstream`):** Tự động đọc danh mục sản phẩm từ `data/inventory.txt` vào `std::vector<Slot>`.
+2. **Luồng chính & State Pattern:** Chọn ngăn `A1` (`Idle` -> `Selecting`) -> Nạp 5.000đ (`Selecting` -> `Paying`) -> Nạp tiếp 10.000đ (`Paying` -> `Dispensing`) -> Xuất 1 lon Coca Cola, trả tiền thừa 5.000đ (nhờ toán tử `-` của `Money`) và quay về `Idle`.
+3. **Đa hình (Polymorphism):** Hiển thị mô tả sản phẩm đa hình qua `Product::getDescription()` cho `DrinkProduct` và `SnackProduct`.
+4. **Strategy Pattern:** Đổi phương thức thanh toán lúc chạy (Runtime) từ Tiền mặt (`CashPayment`) sang Quét mã QR (`QRPayment`).
+5. **STL & Lambda:** Tìm kiếm ngăn chứa bằng `std::find_if` kết hợp biểu thức `lambda` trong `VendingMachine::findSlot()`.
+6. **Xử lý Ngoại lệ (Exceptions):** Bắt ngoại lệ `OutOfStockException` khi chọn ngăn `B2` đang hết hàng, và bắt `InsufficientPaymentException` khi bấm xuất hàng lúc chưa nạp đủ tiền.
+7. **Ghi nhật ký (`std::ofstream`):** Mọi giao dịch bán hàng, hủy hoàn tiền và nạp hàng (Refill) đều được ghi tự động vào `data/transactions.log`.
 
-1. Chọn `1` để xem A1, A2, B1. A2 cố ý có tồn kho bằng 0.
-2. Chọn `2`: máy chuyển từ `Idle` sang `Selecting`.
-3. Chọn `3`, nhập `A2`: máy báo hết hàng, vẫn `Selecting`.
-4. Chọn `3`, nhập `A1`: máy sang `Paying`, ghi nhớ khe A1, tồn kho vẫn là 2.
-5. Chọn `6`: cùng sự kiện `Describe` được gọi qua bốn đối tượng `MachineState`; mỗi lớp trả mô tả khác nhau, không đổi phiên đang chọn.
-6. Chọn `4`: hủy, về `Idle`, xóa khe đã chọn, tồn kho không đổi.
-7. Chọn `5` để tạo thêm một khe khi `Idle`; ví dụ `C1`, `COOKIE`, `Banh quy`, `15000`, `4`, `10`.
-8. Chọn `0` để thoát. Dữ liệu thêm trong phiên chỉ ở bộ nhớ.
-
-Chạy kịch bản nhập sẵn trên Linux/macOS:
-
-```bash
-./build/vending_app < data/demo_week1.txt
-./build/vending_app < data/invalid_input.txt
-```
-
-Console dùng tiếng Việt không dấu để dễ chạy trên các terminal Windows khác bảng mã. Mã khe và mã hàng phân biệt hoa/thường.
-
-## Tổ chức mã
-
-| Đường dẫn | Nội dung |
-|---|---|
-| `include/vending/` | Khai báo các lớp, enum và cấu trúc dữ liệu |
-| `src/` | Cài đặt .cpp, dữ liệu khởi tạo và main |
-| `tests/` | 18 nhóm kiểm thử C++ và 5 kịch bản console |
-| `data/` | Dữ liệu nhập bàn phím cho demo và lỗi |
-| `docs/01_scope.md` | Sáu use case, quy ước và phần hoàn thành ở tuần 1 |
-| `docs/02_design.md` | Trách nhiệm lớp, ownership, invariant, bảng trạng thái |
-| `docs/03_week1_handover.md` | Đối chiếu đầu việc, phân vai và việc chuyển sang tuần 2 |
-| `docs/04_verification.md` | Môi trường và kết quả kiểm tra thực tế |
-| `docs/05_ai_disclosure.md` | Khai báo phần hỗ trợ AI, cần bổ sung xác nhận của sinh viên |
-| `docs/uml_week1.svg` | Sơ đồ lớp có thể mở bằng trình duyệt |
-| `docs/uml_week1.puml` | Nguồn PlantUML của sơ đồ lớp |
-| `docs/state_week1.puml` | Nguồn sơ đồ trạng thái của phiên bản hiện tại |
-| `docs/evidence/` | Log kiểm thử và kết quả chạy demo |
-
-## Kiến thức OOP có thể chỉ ra trong mã
-
-- `Money`, `Product`, `Slot` dùng thuộc tính private và kiểm tra trong constructor; `Slot::refill` kiểm tra trước khi thay đổi tồn kho.
-- `MachineState` là lớp trừu tượng có hàm hủy ảo, `IdleState`/`SelectingState`/`PayingState`/`DispensingState` dùng `override`.
-- `VendingMachine` sở hữu `vector<unique_ptr<MachineState>>`. `dispatch()` gọi `handle()` qua `const MachineState&`, không phân nhánh theo loại lớp con.
-- `describeStates()` gửi cùng sự kiện tới bốn state qua con trỏ base. `DispensingState` mới là khung, chưa có đường chuyển từ giao dịch vào trạng thái này.
-- Quan hệ `Slot` có `Product`, `Inventory` có các `Slot`, `VendingMachine` có `Inventory` là composition, không phải kế thừa.
-- `map` tra mã khe, `vector` chứa đa hình; `find_if` và lambda tìm state; `Money` có toán tử và xuất luồng; dùng `make_unique`, `std::move` và Rule of Zero.
-
-Các ngoại lệ nghiệp vụ tự định nghĩa, Strategy thanh toán, hoàn tiền, commit giao dịch và I/O là phần tuần 2–3. `State` hiện tại không thay thế yêu cầu phải có `Strategy` hoặc `Factory` trong đồ án cuối.
-
-## Làm việc với Git
-
-Gói bàn giao có `git-history.bundle` chứa commit khởi tạo được ghi bằng tác giả `Codex (AI assistant)`. Đây không phải lịch sử đóng góp của sinh viên. Có thể tạo bản clone độc lập:
-
-```bash
-git clone git-history.bundle VendingMachineWeek1-clone
-cd VendingMachineWeek1-clone
-cmake -S . -B build -DCMAKE_BUILD_TYPE=Debug
-cmake --build build --parallel 2
-ctest --test-dir build --output-on-failure
-```
-
-File bundle không tự chứa chính nó. Bản clone có toàn bộ mã, sơ đồ và tài liệu đã commit. Nhóm cần cấu hình tên/email Git thật của từng thành viên và tự commit những thay đổi tiếp theo. Chưa tạo remote hoặc gửi nội dung cho giảng viên.
-
-## Căn cứ
-
-- `Ke_hoach_do_an_OOP_Chu_de_26.docx`, phần lộ trình tuần 1 và thiết kế đã thống nhất trong cuộc trao đổi.
-- `ThucHanh_DoAn_OOP_Cpp(2).docx`, Lab 01–06 là trọng tâm của mốc đầu.
-- `Đồ án môn OOP(1).docx`, yêu cầu Mốc 1: UML v1, cây lớp, khung kế thừa, container đa hình, demo tối thiểu.
+## 5. Khai báo việc sử dụng AI
+* **Công cụ sử dụng:** Google Gemini.
+* **Phạm vi áp dụng:** Hỗ trợ gợi ý khung mã nguồn (boilerplate), cấu hình `CMakeLists.txt` và hệ thống hóa tài liệu ôn tập bảo vệ.
+* **Cách thức kiểm duyệt:** Nhóm 3 sinh viên đã đọc hiểu từng dòng code, kiểm tra ràng buộc RAII (`std::unique_ptr`), chạy thử nghiệm thực tế toàn bộ kịch bản ngoại lệ và nắm vững nguyên lý SOLID để bảo vệ trước giảng viên.

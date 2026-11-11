@@ -1,45 +1,22 @@
-cmake_minimum_required(VERSION 3.16)
-project(VendingMachineWeek1 VERSION 0.1.0 LANGUAGES CXX)
+# Yeu cau phien ban CMake toi thieu
+cmake_minimum_required(VERSION 3.10)
 
+# Dat ten cho project
+project(VendingMachineOOP)
+
+# Thiet lap chuan C++ (ho tro C++17 / C++20)
 set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-add_library(vending_core
-    src/Money.cpp
-    src/Product.cpp
-    src/Slot.cpp
-    src/Inventory.cpp
-    src/MachineState.cpp
-    src/VendingMachine.cpp
-    src/DemoData.cpp
-)
-target_include_directories(vending_core PUBLIC include)
+# Tim tat ca cac file .cpp trong thu muc src
+file(GLOB SOURCES "src/*.cpp")
 
-add_executable(vending_app src/main.cpp src/ConsoleUI.cpp)
-target_link_libraries(vending_app PRIVATE vending_core)
+# Tao file thuc thi chinh tu main.cpp va cac file trong thu muc src
+add_executable(app main.cpp ${SOURCES})
 
-function(vending_warnings target)
-    if(MSVC)
-        target_compile_options(${target} PRIVATE /W4 /permissive- /utf-8)
-    else()
-        target_compile_options(${target} PRIVATE -Wall -Wextra -Wpedantic -Wconversion -Wshadow)
-    endif()
-endfunction()
-vending_warnings(vending_core)
-vending_warnings(vending_app)
+# Khai bao duong dan den thu muc include de trinh bien dich tim thay cac file .h
+target_include_directories(app PRIVATE include)
 
-include(CTest)
-if(BUILD_TESTING)
-    add_executable(vending_tests tests/test_main.cpp)
-    target_link_libraries(vending_tests PRIVATE vending_core)
-    vending_warnings(vending_tests)
-    add_test(NAME core_contracts COMMAND vending_tests)
-
-    find_package(Python3 COMPONENTS Interpreter QUIET)
-    if(Python3_Interpreter_FOUND)
-        add_test(NAME console_scenarios
-            COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/tests/test_console.py
-                $<TARGET_FILE:vending_app> ${CMAKE_CURRENT_SOURCE_DIR}/data)
-    endif()
-endif()
+# Tao file thuc thi kiem thu tu dong (tests/test_scenarios.cpp)
+add_executable(run_tests tests/test_scenarios.cpp ${SOURCES})
+target_include_directories(run_tests PRIVATE include)
